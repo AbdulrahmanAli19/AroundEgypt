@@ -1,3 +1,16 @@
 <resources>
     <string name="app_name">Around Egypt</string>
+    <string name="recommended_experiences">Recommended Experiences</string>
+    <string name="most_recent">Most Recent</string>
+    <string name="welcome">Welcome!</string>
+    <string name="welcome_msg">Now you can explore any experience in 360 degrees and get all the details about it all in one place.</string>
+    <string name="description">Description</string>
+    <string name="share">Share</string>
+    <string name="like">Like</string>
+    <string name="explore_now">Explore now</string>
+    <string name="menu">Menu</string>
+    <string name="filter">filter</string>
+    <string name="info">Info</string>
+    <string name="views">Views</string>
+    <string name="gallery">Gallery</string>
 </resources>

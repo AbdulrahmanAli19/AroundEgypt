@@ -1,4 +1,4 @@
-package abdulrahman.ali19.aroundegypt.ui.theme
+package abdulrahman.ali19.aroundegypt.presentation.theme
 
 import androidx.compose.material3.Typography
 import androidx.compose.ui.text.TextStyle

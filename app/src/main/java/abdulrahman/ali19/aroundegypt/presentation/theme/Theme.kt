@@ -1,6 +1,5 @@
-package abdulrahman.ali19.aroundegypt.ui.theme
+package abdulrahman.ali19.aroundegypt.presentation.theme
 
-import android.app.Activity
 import android.os.Build
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.material3.MaterialTheme

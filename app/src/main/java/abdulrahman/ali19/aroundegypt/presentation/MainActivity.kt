@@ -1,6 +1,6 @@
-package abdulrahman.ali19.aroundegypt
+package abdulrahman.ali19.aroundegypt.presentation
 
-import abdulrahman.ali19.aroundegypt.ui.theme.AroundEgyptTheme
+import abdulrahman.ali19.aroundegypt.presentation.theme.AroundEgyptTheme
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
