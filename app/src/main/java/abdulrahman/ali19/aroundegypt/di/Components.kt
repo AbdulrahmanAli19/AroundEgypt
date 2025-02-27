@@ -8,6 +8,9 @@ import abdulrahman.ali19.aroundegypt.data.source.remote.KtorClient
 import abdulrahman.ali19.aroundegypt.data.source.remote.home.HomeRemoteDataSource
 import abdulrahman.ali19.aroundegypt.data.source.remote.home.HomeRemoteDataSourceImpl
 import abdulrahman.ali19.aroundegypt.domain.repository.home.HomeRepository
+import abdulrahman.ali19.aroundegypt.domain.usecase.home.GetRecentItemsUseCase
+import abdulrahman.ali19.aroundegypt.domain.usecase.home.GetRecommendedItemsUseCase
+import abdulrahman.ali19.aroundegypt.domain.usecase.home.GetSearchUseCase
 import abdulrahman.ali19.aroundegypt.presentation.ui.home.HomeViewModel
 import org.koin.android.ext.koin.androidContext
 import org.koin.core.module.dsl.viewModelOf
@@ -30,5 +33,8 @@ val HomeModule = module {
     single<HomeRemoteDataSource> { HomeRemoteDataSourceImpl(get()) }
     single<HomeLocalDataSource> { HomeLocalDataSourceImpl(get()) }
     single<HomeRepository> { HomeRepositoryImpl(get(), get()) }
+    single { GetRecommendedItemsUseCase(get()) }
+    single { GetRecentItemsUseCase(get()) }
+    single { GetSearchUseCase(get()) }
     viewModelOf(::HomeViewModel)
 }
