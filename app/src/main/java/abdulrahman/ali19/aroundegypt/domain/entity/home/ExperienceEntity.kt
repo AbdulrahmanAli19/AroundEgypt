@@ -17,7 +17,7 @@ data class PlaceDetailsEntity(
     val city: CityEntity,
     val tourHtml: String,
     val famousFigure: String?,
-    val period: String?,
+    val period: PeriodEntity?,
     val era: EraEntity?,
     val founded: String?,
     val detailedDescription: String,
@@ -41,6 +41,13 @@ data class TagEntity(
     val name: String?,
     val disable: Boolean?,
     val topPick: Int?
+)
+
+data class PeriodEntity(
+    val id: String,
+    val value: String,
+    val createdA: String,
+    val updatedAt: String
 )
 
 data class CityEntity(

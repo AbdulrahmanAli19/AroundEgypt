@@ -23,7 +23,7 @@ data class PlaceDetailsDto(
     val city: CityDto? = null,
     @SerialName("tour_html") val tourHtml: String? = null,
     @SerialName("famous_figure") val famousFigure: String? = null,
-    val period: String? = null,
+    val period: PeriodDto? = null,
     val era: EraDto? = null,
     val founded: String? = null,
     @SerialName("detailed_description") val detailedDescription: String? = null,
@@ -40,6 +40,14 @@ data class PlaceDetailsDto(
     @SerialName("reviews_no") val reviewsNo: Int? = null,
     @SerialName("audio_url") val audioUrl: String? = null,
     @SerialName("has_audio") val hasAudio: Boolean? = null
+)
+
+@Serializable
+data class PeriodDto(
+    val id: String? = null,
+    val value: String? = null,
+    @SerialName("created_at") val createdA: String? = null,
+    @SerialName("updated_at") val updatedAt: String? = null
 )
 
 @Serializable

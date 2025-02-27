@@ -4,6 +4,7 @@ import abdulrahman.ali19.aroundegypt.data.models.CityDto
 import abdulrahman.ali19.aroundegypt.data.models.EraDto
 import abdulrahman.ali19.aroundegypt.data.models.ExperienceDto
 import abdulrahman.ali19.aroundegypt.data.models.GmapLocationDto
+import abdulrahman.ali19.aroundegypt.data.models.PeriodDto
 import abdulrahman.ali19.aroundegypt.data.models.PlaceDetailsDto
 import abdulrahman.ali19.aroundegypt.data.models.ReviewDto
 import abdulrahman.ali19.aroundegypt.data.models.TagDto
@@ -13,6 +14,7 @@ import abdulrahman.ali19.aroundegypt.domain.entity.home.CityEntity
 import abdulrahman.ali19.aroundegypt.domain.entity.home.EraEntity
 import abdulrahman.ali19.aroundegypt.domain.entity.home.ExperienceEntity
 import abdulrahman.ali19.aroundegypt.domain.entity.home.GmapLocationEntity
+import abdulrahman.ali19.aroundegypt.domain.entity.home.PeriodEntity
 import abdulrahman.ali19.aroundegypt.domain.entity.home.PlaceDetailsEntity
 import abdulrahman.ali19.aroundegypt.domain.entity.home.ReviewEntity
 import abdulrahman.ali19.aroundegypt.domain.entity.home.TagEntity
@@ -36,7 +38,7 @@ fun PlaceDetailsDto.toEntity() = PlaceDetailsEntity(
     city = city.toEntity(),
     tourHtml = tourHtml ?: "null",
     famousFigure = famousFigure,
-    period = period,
+    period = period.toEntity(),
     era = era?.toEntity(),
     founded = founded,
     detailedDescription = detailedDescription ?: "null",
@@ -61,6 +63,14 @@ fun TagDto?.toEntity() =
         name = this?.name,
         disable = this?.disable,
         topPick = this?.topPick
+    )
+
+fun PeriodDto?.toEntity() =
+    PeriodEntity(
+        id = this?.id ?: "null",
+        value = this?.value ?: "null",
+        createdA = this?.createdA ?: "null",
+        updatedAt = this?.updatedAt ?: "null",
     )
 
 fun CityDto?.toEntity() =
