@@ -10,17 +10,17 @@ import io.ktor.client.request.post
 class HomeRemoteDataSourceImpl(
     private val client: HttpClient
 ) : HomeRemoteDataSource {
-    override suspend fun fetchRecommendedItems(): List<ExperienceDto> {
+    override suspend fun fetchRecommendedItems(): ExperienceDto {
         val result = client.get(ApiEndpoints.RECOMMENDED_EXPERIENCE)
         return result.body()
     }
 
-    override suspend fun fetchRecentItems(): List<ExperienceDto> {
+    override suspend fun fetchRecentItems(): ExperienceDto {
         val result = client.get(ApiEndpoints.RECENT_EXPERIENCE)
         return result.body()
     }
 
-    override suspend fun fetchSearch(title: String): List<ExperienceDto> {
+    override suspend fun fetchSearch(title: String): ExperienceDto {
         val result = client.post(ApiEndpoints.search(searchText = title))
         return result.body()
     }

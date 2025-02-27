@@ -1,5 +1,6 @@
 package abdulrahman.ali19.aroundegypt.presentation
 
+import abdulrahman.ali19.aroundegypt.di.HomeModule
 import abdulrahman.ali19.aroundegypt.di.appUtils
 import android.app.Application
 import org.koin.android.ext.koin.androidContext
@@ -11,7 +12,7 @@ class AroundEgyptApplication : Application() {
         startKoin {
             androidContext(this@AroundEgyptApplication)
             modules(
-                appUtils
+                appUtils + HomeModule
             )
         }
     }
