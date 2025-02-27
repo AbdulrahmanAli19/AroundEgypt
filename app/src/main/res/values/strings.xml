@@ -13,4 +13,6 @@
     <string name="info">Info</string>
     <string name="views">Views</string>
     <string name="gallery">Gallery</string>
+    <string name="search_hint">Try “Luxor”</string>
+    <string name="search">Search</string>
 </resources>
