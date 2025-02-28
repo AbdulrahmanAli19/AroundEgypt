@@ -1,6 +1,7 @@
 package abdulrahman.ali19.aroundegypt.presentation.ui.home.compments
 
 import abdulrahman.ali19.aroundegypt.R
+import abdulrahman.ali19.aroundegypt.presentation.theme.PrimaryColor
 import abdulrahman.ali19.aroundegypt.presentation.ui.home.viewmodel.PlaceState
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -90,7 +91,7 @@ fun PlaceBanner(
                             .size(18.dp),
                         painter = painterResource(R.drawable.ic_star),
                         contentDescription = stringResource(R.string.recommended),
-                        tint = MaterialTheme.colorScheme.primary
+                        tint = PrimaryColor
                     )
 
                     Text(
@@ -188,7 +189,7 @@ fun PlaceBanner(
                             .size(24.dp),
                         painter = painterResource(R.drawable.ic_like),
                         contentDescription = stringResource(R.string.like),
-                        tint = if (place.isLiked) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.secondary
+                        tint = if (place.isLiked) PrimaryColor else MaterialTheme.colorScheme.secondary
                     )
                 }
             }

@@ -20,7 +20,13 @@ data class PlaceState(
     val isLiked: Boolean,
 )
 
-sealed class HomeIntent{
-    data class Search(val query: String): HomeIntent()
-    data class Like(val placeId: String): HomeIntent()
+sealed class HomeIntent {
+    data class Search(val query: String) : HomeIntent()
+    data class Like(val placeId: String, val position: Int, val likeType: LikeTypes) : HomeIntent()
+}
+
+enum class LikeTypes {
+    RECOMMENDED,
+    RECENT,
+    SEARCH
 }

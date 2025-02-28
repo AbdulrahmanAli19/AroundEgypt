@@ -5,13 +5,13 @@ import abdulrahman.ali19.aroundegypt.presentation.ui.home.compments.HomeHeader
 import abdulrahman.ali19.aroundegypt.presentation.ui.home.compments.PlaceBanner
 import abdulrahman.ali19.aroundegypt.presentation.ui.home.viewmodel.HomeIntent
 import abdulrahman.ali19.aroundegypt.presentation.ui.home.viewmodel.HomeViewModel
+import abdulrahman.ali19.aroundegypt.presentation.ui.home.viewmodel.LikeTypes
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.pager.HorizontalPager
 import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.material3.CircularProgressIndicator
@@ -95,7 +95,15 @@ fun HomeScreen(
                     ) {
                         PlaceBanner(
                             place = state.recommendedItems[page],
-                            onLikeClick = { place -> viewModel.handelIntent(HomeIntent.Like(place.id)) },
+                            onLikeClick = { place ->
+                                viewModel.handelIntent(
+                                    HomeIntent.Like(
+                                        placeId = place.id,
+                                        position = page,
+                                        likeType = LikeTypes.RECOMMENDED
+                                    )
+                                )
+                            },
                             isRecommended = true
                         )
                     }
@@ -112,10 +120,18 @@ fun HomeScreen(
                 )
             }
 
-            items(state.recentItems) {
+            items(state.recentItems.size) {
                 PlaceBanner(
-                    place = it,
-                    onLikeClick = { place -> viewModel.handelIntent(HomeIntent.Like(place.id)) }
+                    place = state.recentItems[it],
+                    onLikeClick = { place ->
+                        viewModel.handelIntent(
+                            HomeIntent.Like(
+                                placeId = place.id,
+                                position = it,
+                                likeType = LikeTypes.RECENT
+                            )
+                        )
+                    }
                 )
             }
         } else {
@@ -133,10 +149,18 @@ fun HomeScreen(
                         )
                 }
             }
-            items(state.searchResult) {
+            items(state.searchResult.size) {
                 PlaceBanner(
-                    place = it,
-                    onLikeClick = { place -> viewModel.handelIntent(HomeIntent.Like(place.id)) }
+                    place = state.searchResult[it],
+                    onLikeClick = { place ->
+                        viewModel.handelIntent(
+                            HomeIntent.Like(
+                                placeId = place.id,
+                                position = it,
+                                likeType = LikeTypes.SEARCH
+                            )
+                        )
+                    }
                 )
             }
         }

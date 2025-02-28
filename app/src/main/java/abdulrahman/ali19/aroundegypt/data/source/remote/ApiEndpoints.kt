@@ -8,5 +8,5 @@ object ApiEndpoints {
 
     fun search(searchText: String) = "experiences?filter[title]=$searchText"
     fun singleItem(id: Int) = "experiences/$id"
-    fun likeItem(id: Int) = "experiences/$id}/like"
+    fun likeItem(id: String) = "experiences/$id/like"
 }

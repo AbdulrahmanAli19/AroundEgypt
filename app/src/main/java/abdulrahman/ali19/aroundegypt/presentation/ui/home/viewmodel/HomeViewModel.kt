@@ -3,6 +3,7 @@ package abdulrahman.ali19.aroundegypt.presentation.ui.home.viewmodel
 import abdulrahman.ali19.aroundegypt.domain.usecase.home.GetRecentItemsUseCase
 import abdulrahman.ali19.aroundegypt.domain.usecase.home.GetRecommendedItemsUseCase
 import abdulrahman.ali19.aroundegypt.domain.usecase.home.GetSearchUseCase
+import abdulrahman.ali19.aroundegypt.domain.usecase.home.LikePlaceUseCase
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -14,6 +15,7 @@ import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.filter
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.flatMapLatest
+import kotlinx.coroutines.flow.lastOrNull
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
@@ -22,7 +24,8 @@ import kotlinx.coroutines.launch
 class HomeViewModel(
     private val getRecentItemsUseCase: GetRecentItemsUseCase,
     private val getRecommendedItemsUseCase: GetRecommendedItemsUseCase,
-    private val getSearchUseCase: GetSearchUseCase
+    private val getSearchUseCase: GetSearchUseCase,
+    private val likePlaceUseCase: LikePlaceUseCase
 ) : ViewModel() {
 
     private val _state = MutableStateFlow(HomeState())
@@ -92,8 +95,53 @@ class HomeViewModel(
             }
 
             is HomeIntent.Like -> {
-
+                likePlace(intent)
             }
         }
+    }
+
+    private fun likePlace(likeIntent: HomeIntent.Like) {
+        viewModelScope.launch {
+            val result = likePlaceUseCase(likeIntent.placeId)
+            when (likeIntent.likeType) {
+                LikeTypes.RECOMMENDED -> {
+                    val newList = state.value.recommendedItems.toMutableList()
+                    newList[likeIntent.position] = newList[likeIntent.position].copy(isLiked = true)
+                    newList[likeIntent.position] = newList[likeIntent.position].copy(
+                        numberOfLikes = result.lastOrNull()?.likesNo?.toString()
+                            ?: newList[likeIntent.position].numberOfLikes.plus(1)
+                    )
+                    _state.update {
+                        it.copy(recommendedItems = newList)
+                    }
+                }
+
+                LikeTypes.RECENT -> {
+                    val newList = state.value.recentItems.toMutableList()
+                    newList[likeIntent.position] = newList[likeIntent.position].copy(isLiked = true)
+                    newList[likeIntent.position] = newList[likeIntent.position].copy(
+                        numberOfLikes = result.lastOrNull()?.likesNo?.toString()
+                            ?: newList[likeIntent.position].numberOfLikes.plus(1)
+                    )
+                    _state.update {
+                        it.copy(recentItems = newList)
+                    }
+                }
+
+                LikeTypes.SEARCH -> {
+                    val newList = state.value.searchResult.toMutableList()
+                    newList[likeIntent.position] = newList[likeIntent.position].copy(isLiked = true)
+                    newList[likeIntent.position] = newList[likeIntent.position].copy(
+                        numberOfLikes = result.lastOrNull()?.likesNo?.toString()
+                            ?: newList[likeIntent.position].numberOfLikes.plus(1)
+                    )
+                    _state.update {
+                        it.copy(searchResult = newList)
+                    }
+                }
+            }
+        }
+
+
     }
 }

@@ -11,6 +11,7 @@ import abdulrahman.ali19.aroundegypt.domain.repository.home.HomeRepository
 import abdulrahman.ali19.aroundegypt.domain.usecase.home.GetRecentItemsUseCase
 import abdulrahman.ali19.aroundegypt.domain.usecase.home.GetRecommendedItemsUseCase
 import abdulrahman.ali19.aroundegypt.domain.usecase.home.GetSearchUseCase
+import abdulrahman.ali19.aroundegypt.domain.usecase.home.LikePlaceUseCase
 import abdulrahman.ali19.aroundegypt.presentation.ui.home.viewmodel.HomeViewModel
 import org.koin.android.ext.koin.androidContext
 import org.koin.core.module.dsl.viewModelOf
@@ -36,5 +37,6 @@ val HomeModule = module {
     single { GetRecommendedItemsUseCase(get()) }
     single { GetRecentItemsUseCase(get()) }
     single { GetSearchUseCase(get()) }
+    single { LikePlaceUseCase(get()) }
     viewModelOf(::HomeViewModel)
 }

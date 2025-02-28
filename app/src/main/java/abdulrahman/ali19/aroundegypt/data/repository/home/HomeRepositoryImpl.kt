@@ -5,6 +5,7 @@ import abdulrahman.ali19.aroundegypt.data.models.ExperienceDto
 import abdulrahman.ali19.aroundegypt.data.source.local.home.HomeLocalDataSource
 import abdulrahman.ali19.aroundegypt.data.source.remote.home.HomeRemoteDataSource
 import abdulrahman.ali19.aroundegypt.domain.entity.home.ExperienceEntity
+import abdulrahman.ali19.aroundegypt.domain.entity.home.IntEntity
 import abdulrahman.ali19.aroundegypt.domain.repository.home.HomeRepository
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.first
@@ -51,5 +52,10 @@ class HomeRepositoryImpl(
         val result = remoteDataSource.fetchSearch(title)
         emit(result?.toEntity())
 
+    }
+
+    override suspend fun likePlace(id: String): Flow<IntEntity?> = flow {
+        val result = remoteDataSource.likePlace(id)
+        emit(result?.toEntity())
     }
 }
