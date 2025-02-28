@@ -30,12 +30,12 @@ class HomeRemoteDataSourceImpl(
         return result.body()
     }
 
+    private val json = Json { ignoreUnknownKeys = true }
     override suspend fun likePlace(id: String): IntDto {
         val result = client.post(ApiEndpoints.likeItem(id = id)) {
             contentType(ContentType.Application.Json)
             accept(ContentType.Application.Json)
         }
-        return Json { ignoreUnknownKeys = true }
-            .decodeFromString(IntDto.serializer(), result.body<String>())
+        return json.decodeFromString(IntDto.serializer(), result.body<String>())
     }
 }
