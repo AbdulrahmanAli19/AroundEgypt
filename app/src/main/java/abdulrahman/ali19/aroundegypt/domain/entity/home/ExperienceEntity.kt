@@ -23,7 +23,7 @@ data class PlaceDetailsEntity(
     val detailedDescription: String,
     val address: String,
     val gmapLocation: GmapLocationEntity,
-    val openingHours: Map<String, List<String>>,
+    /*val openingHours: Map<String, List<String>>,*/
     val translatedOpeningHours: Map<String, TranslatedOpeningHourEntity>,
     val startingPrice: Int,
     val ticketPrices: List<TicketPriceEntity>,

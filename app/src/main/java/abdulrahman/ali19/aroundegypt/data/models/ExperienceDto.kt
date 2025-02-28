@@ -34,7 +34,7 @@ data class PlaceDetailsDto(
     @SerialName("detailed_description") val detailedDescription: String? = null,
     val address: String? = null,
     @SerialName("gmap_location") val gmapLocation: GmapLocationDto? = null,
-    @SerialName("opening_hours") val openingHours: Map<String, List<String>>? = null,
+    /*@SerialName("opening_hours") val openingHours: Map<String, List<String>>? = null,*/
     @SerialName("translated_opening_hours") val translatedOpeningHours: Map<String, TranslatedOpeningHourDto>? = null,
     @SerialName("starting_price") val startingPrice: Int? = null,
     @SerialName("ticket_prices") val ticketPrices: List<TicketPriceDto>? = null,

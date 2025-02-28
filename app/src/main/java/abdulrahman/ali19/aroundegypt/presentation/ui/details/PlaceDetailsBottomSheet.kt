@@ -9,7 +9,6 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -145,11 +144,15 @@ fun PlaceDetailsHeader(
         }
 
         Row(
-            modifier = Modifier.padding(top = 16.dp),
+            modifier = Modifier
+                .padding(top = 16.dp)
+                .fillMaxWidth(),
             horizontalArrangement = Arrangement.SpaceBetween,
             verticalAlignment = Alignment.Top
         ) {
-            Column {
+            Column(
+                modifier = Modifier.weight(1f)
+            ) {
                 Text(
                     text = placeState.title,
                     style = MaterialTheme.typography.titleLarge,
@@ -158,26 +161,28 @@ fun PlaceDetailsHeader(
 
                 Text(
                     text = placeState.location,
-                    style = MaterialTheme.typography.titleSmall.copy(
+                    style = MaterialTheme.typography.titleMedium.copy(
                         color = Color.Gray
                     ),
-                    modifier = Modifier.padding(16.dp)
+                    modifier = Modifier.padding(start = 16.dp)
                 )
             }
 
-            Row {
-                Icon(
-                    modifier = modifier
-                        .size(24.dp),
-                    painter = painterResource(R.drawable.ic_share),
-                    contentDescription = stringResource(R.string.share),
-                    tint = PrimaryColor
-                )
-                Spacer(modifier = Modifier.padding(horizontal = 2.dp))
+            Row(
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                IconButton(onClick = {}) {
+                    Icon(
+                        modifier = Modifier.size(24.dp),
+                        painter = painterResource(R.drawable.ic_share),
+                        contentDescription = stringResource(R.string.share),
+                        tint = PrimaryColor
+                    )
+                }
+
                 IconButton(onClick = { onLikeClick(placeState.id) }) {
                     Icon(
-                        modifier = modifier
-                            .size(24.dp),
+                        modifier = Modifier.size(24.dp),
                         painter = painterResource(R.drawable.ic_like),
                         contentDescription = stringResource(R.string.views),
                         tint = if (placeState.isLiked) PrimaryColor else MaterialTheme.colorScheme.secondary
@@ -186,12 +191,12 @@ fun PlaceDetailsHeader(
 
                 Text(
                     text = placeState.likesNo,
-                    style = MaterialTheme.typography.titleMedium,
-                    modifier = Modifier.padding(4.dp)
+                    style = MaterialTheme.typography.titleSmall,
+                    modifier = Modifier.padding(end = 16.dp)
                 )
             }
-
         }
+
 
     }
 }
@@ -217,7 +222,7 @@ fun PlaceDetailsBody(
 
         Text(
             text = placeState.description,
-            style = MaterialTheme.typography.bodyMedium,
+            style = MaterialTheme.typography.titleMedium,
             modifier = Modifier
                 .padding(horizontal = 16.dp)
                 .padding(top = 16.dp)
