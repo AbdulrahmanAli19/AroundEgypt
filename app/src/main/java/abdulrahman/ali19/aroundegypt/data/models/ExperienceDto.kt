@@ -10,6 +10,11 @@ data class ExperienceDto(
 ) : BaseResponse<ExperienceDto>()
 
 @Serializable
+data class SingleExperienceDto(
+    @SerialName("data") val data: PlaceDetailsDto?
+) : BaseResponse<ExperienceDto>()
+
+@Serializable
 data class PlaceDetailsDto(
     val id: String? = null,
     val title: String? = null,

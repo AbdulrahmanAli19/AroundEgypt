@@ -4,6 +4,7 @@ import abdulrahman.ali19.aroundegypt.R
 import abdulrahman.ali19.aroundegypt.presentation.theme.PrimaryColor
 import abdulrahman.ali19.aroundegypt.presentation.ui.home.viewmodel.PlaceState
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -42,15 +43,17 @@ import com.google.accompanist.placeholder.material.shimmer
 @Composable
 fun PlaceBanner(
     place: PlaceState,
+    onClick: (placeId: String) -> Unit,
     onLikeClick: (PlaceState) -> Unit,
     modifier: Modifier = Modifier,
-    isRecommended: Boolean = false,
+    isRecommended: Boolean = false
 ) {
     Column(
         modifier = modifier
             .clip(shape = MaterialTheme.shapes.medium)
             .fillMaxWidth()
             .padding(horizontal = 10.dp)
+            .clickable { onClick(place.id) }
     ) {
 
         Box {

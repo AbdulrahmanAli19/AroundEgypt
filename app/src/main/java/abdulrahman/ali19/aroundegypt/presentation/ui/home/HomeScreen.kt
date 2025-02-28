@@ -1,6 +1,7 @@
 package abdulrahman.ali19.aroundegypt.presentation.ui.home
 
 import abdulrahman.ali19.aroundegypt.R
+import abdulrahman.ali19.aroundegypt.presentation.ui.details.PlaceDetailsBottomSheet
 import abdulrahman.ali19.aroundegypt.presentation.ui.home.compments.HomeHeader
 import abdulrahman.ali19.aroundegypt.presentation.ui.home.compments.PlaceBanner
 import abdulrahman.ali19.aroundegypt.presentation.ui.home.viewmodel.HomeIntent
@@ -31,11 +32,17 @@ import kotlin.math.absoluteValue
 
 @Composable
 fun HomeScreen(
-    viewModel: HomeViewModel = koinViewModel(),
-    navigateToDetails: (String) -> Unit
+    viewModel: HomeViewModel = koinViewModel()
 ) {
     val state by viewModel.state.collectAsState()
     val pagerState = rememberPagerState(pageCount = { state.recommendedItems.size })
+
+    if (state.isDetailsVisible)
+        PlaceDetailsBottomSheet(
+            placeId = state.selectedPlaceId,
+            onDismissRequest = { viewModel.handelIntent(HomeIntent.HideDetails) }
+        )
+
     LazyColumn {
         item {
             HomeHeader(
@@ -104,7 +111,8 @@ fun HomeScreen(
                                     )
                                 )
                             },
-                            isRecommended = true
+                            isRecommended = true,
+                            onClick = { viewModel.handelIntent(HomeIntent.ShowDetails(it)) }
                         )
                     }
 
@@ -131,7 +139,8 @@ fun HomeScreen(
                                 likeType = LikeTypes.RECENT
                             )
                         )
-                    }
+                    },
+                    onClick = { viewModel.handelIntent(HomeIntent.ShowDetails(it)) }
                 )
             }
         } else {
@@ -160,7 +169,8 @@ fun HomeScreen(
                                 likeType = LikeTypes.SEARCH
                             )
                         )
-                    }
+                    },
+                    onClick = { viewModel.handelIntent(HomeIntent.ShowDetails(it)) }
                 )
             }
         }

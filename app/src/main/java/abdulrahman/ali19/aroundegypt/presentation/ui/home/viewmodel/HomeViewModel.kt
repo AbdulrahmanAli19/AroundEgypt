@@ -13,8 +13,8 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.debounce
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.filter
-import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.flatMapLatest
+import kotlinx.coroutines.flow.last
 import kotlinx.coroutines.flow.lastOrNull
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.update
@@ -68,7 +68,7 @@ class HomeViewModel(
     private suspend fun getRecentPlaces() {
         val result = getRecentItemsUseCase()
             .map { it?.placeDetails?.map { place -> place.toState() } ?: emptyList() }
-            .first()
+            .last()
 
         _state.update {
             it.copy(recentItems = result, isRecentLoading = false)
@@ -78,7 +78,7 @@ class HomeViewModel(
     private suspend fun getRecommendedPlaces() {
         val result = getRecommendedItemsUseCase()
             .map { it?.placeDetails?.map { place -> place.toState() } ?: emptyList() }
-            .first()
+            .last()
 
         _state.update {
             it.copy(recommendedItems = result, isRecommendedLoading = false)
@@ -96,6 +96,17 @@ class HomeViewModel(
 
             is HomeIntent.Like -> {
                 likePlace(intent)
+            }
+
+            is HomeIntent.ShowDetails -> _state.update {
+                it.copy(
+                    isDetailsVisible = true,
+                    selectedPlaceId = intent.placeId
+                )
+            }
+
+            HomeIntent.HideDetails -> _state.update {
+                it.copy(isDetailsVisible = false, selectedPlaceId = "")
             }
         }
     }

@@ -7,6 +7,6 @@ object ApiEndpoints {
     const val RECOMMENDED_EXPERIENCE = "experiences?filter[recommended]=true"
 
     fun search(searchText: String) = "experiences?filter[title]=$searchText"
-    fun singleItem(id: Int) = "experiences/$id"
+    fun singleItem(id: String) = "experiences/$id"
     fun likeItem(id: String) = "experiences/$id/like"
 }

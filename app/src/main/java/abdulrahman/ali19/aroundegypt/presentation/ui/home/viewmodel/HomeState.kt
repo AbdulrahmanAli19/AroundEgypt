@@ -8,6 +8,8 @@ data class HomeState(
     val isRecommendedLoading: Boolean = false,
     val isRecentLoading: Boolean = false,
     val isSearchLoading: Boolean = false,
+    val isDetailsVisible: Boolean = false,
+    val selectedPlaceId: String = "",
     val error: String = ""
 )
 
@@ -21,6 +23,8 @@ data class PlaceState(
 )
 
 sealed class HomeIntent {
+    data class ShowDetails(val placeId: String) : HomeIntent()
+    data object HideDetails : HomeIntent()
     data class Search(val query: String) : HomeIntent()
     data class Like(val placeId: String, val position: Int, val likeType: LikeTypes) : HomeIntent()
 }

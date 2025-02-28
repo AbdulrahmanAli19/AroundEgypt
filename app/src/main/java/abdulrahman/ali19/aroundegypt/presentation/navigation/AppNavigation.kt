@@ -21,11 +21,7 @@ fun AppNavigation(
     ) {
 
         composable(HomeScreen.route) {
-            HomeScreen(
-                navigateToDetails = {
-
-                }
-            )
+            HomeScreen()
         }
 
     }

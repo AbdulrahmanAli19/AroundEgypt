@@ -2,6 +2,7 @@ package abdulrahman.ali19.aroundegypt.data.source.remote.home
 
 import abdulrahman.ali19.aroundegypt.data.models.ExperienceDto
 import abdulrahman.ali19.aroundegypt.data.models.IntDto
+import abdulrahman.ali19.aroundegypt.data.models.SingleExperienceDto
 import abdulrahman.ali19.aroundegypt.data.source.remote.ApiEndpoints
 import io.ktor.client.HttpClient
 import io.ktor.client.call.body
@@ -27,6 +28,11 @@ class HomeRemoteDataSourceImpl(
 
     override suspend fun fetchSearch(title: String): ExperienceDto {
         val result = client.get(ApiEndpoints.search(searchText = title))
+        return result.body()
+    }
+
+    override suspend fun fetchPlaceDetails(title: String): SingleExperienceDto? {
+        val result = client.get(ApiEndpoints.singleItem(id = title))
         return result.body()
     }
 
