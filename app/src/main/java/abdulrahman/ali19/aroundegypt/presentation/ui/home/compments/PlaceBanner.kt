@@ -2,6 +2,7 @@ package abdulrahman.ali19.aroundegypt.presentation.ui.home.compments
 
 import abdulrahman.ali19.aroundegypt.R
 import abdulrahman.ali19.aroundegypt.presentation.ui.home.viewmodel.PlaceState
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -39,9 +40,10 @@ import com.google.accompanist.placeholder.material.shimmer
 
 @Composable
 fun PlaceBanner(
-    modifier: Modifier = Modifier,
     place: PlaceState,
     onLikeClick: (PlaceState) -> Unit,
+    modifier: Modifier = Modifier,
+    isRecommended: Boolean = false,
 ) {
     Column(
         modifier = modifier
@@ -71,6 +73,34 @@ fun PlaceBanner(
                 onSuccess = { isLoading = false },
                 onError = { isLoading = false }
             )
+
+            if (isRecommended)
+                Row(
+                    modifier = modifier
+                        .padding(8.dp)
+                        .align(Alignment.TopStart)
+                        .clip(MaterialTheme.shapes.medium)
+                        .background(Color.Gray.copy(alpha = 0.5f)),
+                    verticalAlignment = Alignment.CenterVertically,
+                    horizontalArrangement = Arrangement.Center
+                ) {
+                    Icon(
+                        modifier = modifier
+                            .padding(8.dp)
+                            .size(18.dp),
+                        painter = painterResource(R.drawable.ic_star),
+                        contentDescription = stringResource(R.string.recommended),
+                        tint = MaterialTheme.colorScheme.primary
+                    )
+
+                    Text(
+                        modifier = Modifier.padding(end = 8.dp),
+                        text = stringResource(R.string.recommended).uppercase(),
+                        style = MaterialTheme.typography.titleSmall.copy(
+                            color = Color.White,
+                        )
+                    )
+                }
 
             Icon(
                 modifier = modifier
