@@ -27,8 +27,8 @@ import kotlin.math.absoluteValue
 
 @Composable
 fun HomeScreen(
-    navigateToDetails: (String) -> Unit,
-    viewModel: HomeViewModel = koinViewModel()
+    viewModel: HomeViewModel = koinViewModel(),
+    navigateToDetails: (String) -> Unit
 ) {
     val state by viewModel.state.collectAsState()
     val pagerState = rememberPagerState(pageCount = { state.recommendedItems.size })
@@ -42,75 +42,85 @@ fun HomeScreen(
             )
         }
 
-        item {
-            Text(
-                text = stringResource(R.string.welcome),
-                style = MaterialTheme.typography.headlineLarge,
-                modifier = Modifier
-                    .padding(horizontal = 16.dp)
-                    .padding(top = 16.dp)
-            )
+        if (state.query.isEmpty()) {
 
-            Text(
-                text = stringResource(R.string.welcome_msg),
-                style = MaterialTheme.typography.titleLarge,
-                modifier = Modifier.padding(horizontal = 16.dp)
-            )
-        }
-
-        item {
-            Text(
-                text = stringResource(R.string.recommended_experiences),
-                style = MaterialTheme.typography.headlineLarge,
-                modifier = Modifier
-                    .padding(16.dp)
-            )
-        }
-
-        item {
-            HorizontalPager(
-                state = pagerState,
-                contentPadding = PaddingValues(horizontal = 16.dp),
-
-                ) { page ->
-                Box(
+            item {
+                Text(
+                    text = stringResource(R.string.welcome),
+                    style = MaterialTheme.typography.headlineLarge,
                     modifier = Modifier
-                        .graphicsLayer {
-                            val pageOffset = (
-                                    (pagerState.currentPage - page) + pagerState
-                                        .currentPageOffsetFraction
-                                    ).absoluteValue
-                            alpha = lerp(
-                                start = 0.5f,
-                                stop = 1f,
-                                fraction = 1f - pageOffset.coerceIn(0f, 1f)
-                            )
-                        }
-                ) {
-                    PlaceBanner(
-                        place = state.recommendedItems[page],
-                        onLikeClick = { place -> viewModel.handelIntent(HomeIntent.Like(place.id)) },
-                        isRecommended = true
-                    )
-                }
+                        .padding(horizontal = 16.dp)
+                        .padding(top = 16.dp)
+                )
 
+                Text(
+                    text = stringResource(R.string.welcome_msg),
+                    style = MaterialTheme.typography.titleLarge,
+                    modifier = Modifier.padding(horizontal = 16.dp)
+                )
             }
-        }
 
-        item {
-            Text(
-                text = stringResource(R.string.most_recent),
-                style = MaterialTheme.typography.headlineLarge,
-                modifier = Modifier
-                    .padding(16.dp)
-            )
-        }
+            item {
+                Text(
+                    text = stringResource(R.string.recommended_experiences),
+                    style = MaterialTheme.typography.headlineLarge,
+                    modifier = Modifier
+                        .padding(16.dp)
+                )
+            }
 
-        items(state.recentItems) {
-            PlaceBanner(
-                place = it,
-                onLikeClick = { place -> viewModel.handelIntent(HomeIntent.Like(place.id)) }
-            )
+            item {
+                HorizontalPager(
+                    state = pagerState,
+                    contentPadding = PaddingValues(horizontal = 16.dp),
+
+                    ) { page ->
+                    Box(
+                        modifier = Modifier
+                            .graphicsLayer {
+                                val pageOffset = (
+                                        (pagerState.currentPage - page) + pagerState
+                                            .currentPageOffsetFraction
+                                        ).absoluteValue
+                                alpha = lerp(
+                                    start = 0.5f,
+                                    stop = 1f,
+                                    fraction = 1f - pageOffset.coerceIn(0f, 1f)
+                                )
+                            }
+                    ) {
+                        PlaceBanner(
+                            place = state.recommendedItems[page],
+                            onLikeClick = { place -> viewModel.handelIntent(HomeIntent.Like(place.id)) },
+                            isRecommended = true
+                        )
+                    }
+
+                }
+            }
+
+            item {
+                Text(
+                    text = stringResource(R.string.most_recent),
+                    style = MaterialTheme.typography.headlineLarge,
+                    modifier = Modifier
+                        .padding(16.dp)
+                )
+            }
+
+            items(state.recentItems) {
+                PlaceBanner(
+                    place = it,
+                    onLikeClick = { place -> viewModel.handelIntent(HomeIntent.Like(place.id)) }
+                )
+            }
+        } else {
+            items(state.searchResult) {
+                PlaceBanner(
+                    place = it,
+                    onLikeClick = { place -> viewModel.handelIntent(HomeIntent.Like(place.id)) }
+                )
+            }
         }
     }
 }

@@ -5,7 +5,6 @@ import android.content.SharedPreferences
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import kotlinx.serialization.KSerializer
-import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
 
 class LocalDataProvider(
@@ -15,9 +14,10 @@ class LocalDataProvider(
     private val sharedPreferences: SharedPreferences =
         context.getSharedPreferences("experience_prefs", Context.MODE_PRIVATE)
 
-    fun <T> saveObject(key: String, value: KSerializer<T>) {
+    fun <T> saveObject(key: String, value: T, serializer: KSerializer<T>) {
+        val jsonString = Json.encodeToString(serializer, value)
         sharedPreferences.edit()
-            .putString(key, Json.encodeToString(value))
+            .putString(key, jsonString)
             .apply()
     }
 

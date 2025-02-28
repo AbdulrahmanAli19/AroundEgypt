@@ -5,6 +5,8 @@ import abdulrahman.ali19.aroundegypt.data.models.PlaceDetailsDto
 import abdulrahman.ali19.aroundegypt.data.source.local.LocalDataProvider
 import abdulrahman.ali19.aroundegypt.data.source.local.LocalKeys
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.flow.lastOrNull
 import kotlinx.serialization.builtins.ListSerializer
 
 class HomeLocalDataSourceImpl(
@@ -13,30 +15,33 @@ class HomeLocalDataSourceImpl(
     override suspend fun getRecommendedItems(): Flow<ExperienceDto?> {
         val recommendedItems = dataProvider.getObject(
             key = LocalKeys.RECOMMENDED,
-            serializer = ExperienceDto.serializer()
+            serializer = ListSerializer(PlaceDetailsDto.serializer())
         )
-        return recommendedItems
+
+        return flow { emit(ExperienceDto(places = recommendedItems.lastOrNull() ?: emptyList())) }
     }
 
     override suspend fun getRecentItems(): Flow<ExperienceDto?> {
         val recommendedItems = dataProvider.getObject(
             key = LocalKeys.RECENT,
-            serializer = ExperienceDto.serializer()
+            serializer = ListSerializer(PlaceDetailsDto.serializer())
         )
-        return recommendedItems
+        return flow { emit(ExperienceDto(places = recommendedItems.lastOrNull() ?: emptyList())) }
     }
 
     override suspend fun insertRecommendedItems(experiences: ExperienceDto?) {
         dataProvider.saveObject(
             key = LocalKeys.RECOMMENDED,
-            value = ListSerializer(PlaceDetailsDto.serializer())
+            serializer = ListSerializer(PlaceDetailsDto.serializer()),
+            value = experiences?.places ?: emptyList()
         )
     }
 
     override suspend fun insertRecentItems(experiences: ExperienceDto?) {
         dataProvider.saveObject(
             key = LocalKeys.RECENT,
-            value = ExperienceDto.serializer()
+            serializer = ListSerializer(PlaceDetailsDto.serializer()),
+            value = experiences?.places ?: emptyList()
         )
     }
 
