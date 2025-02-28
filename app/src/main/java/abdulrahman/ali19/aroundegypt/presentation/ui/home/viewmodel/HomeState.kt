@@ -22,4 +22,5 @@ data class PlaceState(
 
 sealed class HomeIntent{
     data class Search(val query: String): HomeIntent()
+    data class Like(val placeId: String): HomeIntent()
 }

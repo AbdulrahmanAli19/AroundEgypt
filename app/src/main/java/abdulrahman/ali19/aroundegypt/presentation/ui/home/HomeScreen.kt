@@ -2,10 +2,12 @@ package abdulrahman.ali19.aroundegypt.presentation.ui.home
 
 import abdulrahman.ali19.aroundegypt.R
 import abdulrahman.ali19.aroundegypt.presentation.ui.home.compments.HomeHeader
+import abdulrahman.ali19.aroundegypt.presentation.ui.home.compments.PlaceBanner
 import abdulrahman.ali19.aroundegypt.presentation.ui.home.viewmodel.HomeIntent
 import abdulrahman.ali19.aroundegypt.presentation.ui.home.viewmodel.HomeViewModel
-import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -22,27 +24,47 @@ fun HomeScreen(
     viewModel: HomeViewModel = koinViewModel()
 ) {
     val state by viewModel.state.collectAsState()
-    Column {
-        HomeHeader(
-            query = state.query,
-            onQueryChange = { viewModel.handelIntent(HomeIntent.Search(it)) },
-            onFilterClick = {},
-            onMenuClick = {}
-        )
+    LazyColumn {
+        item {
+            HomeHeader(
+                query = state.query,
+                onQueryChange = { viewModel.handelIntent(HomeIntent.Search(it)) },
+                onFilterClick = {},
+                onMenuClick = {}
+            )
+        }
 
-        Text(
-            text = stringResource(R.string.welcome),
-            style = MaterialTheme.typography.headlineLarge,
-            modifier = Modifier
-                .padding(horizontal = 16.dp)
-                .padding(top = 16.dp)
-        )
+        item {
+            Text(
+                text = stringResource(R.string.welcome),
+                style = MaterialTheme.typography.headlineLarge,
+                modifier = Modifier
+                    .padding(horizontal = 16.dp)
+                    .padding(top = 16.dp)
+            )
 
-        Text(
-            text = stringResource(R.string.welcome_msg),
-            style = MaterialTheme.typography.titleLarge,
-            modifier = Modifier.padding(horizontal = 16.dp)
-        )
+            Text(
+                text = stringResource(R.string.welcome_msg),
+                style = MaterialTheme.typography.titleLarge,
+                modifier = Modifier.padding(horizontal = 16.dp)
+            )
+        }
+
+        item {
+            Text(
+                text = stringResource(R.string.most_recent),
+                style = MaterialTheme.typography.headlineLarge,
+                modifier = Modifier
+                    .padding(16.dp)
+            )
+        }
+
+        items(state.recentItems) {
+            PlaceBanner(
+                place = it,
+                onLikeClick = { place -> viewModel.handelIntent(HomeIntent.Like(place.id)) }
+            )
+        }
     }
 }
 

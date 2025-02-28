@@ -61,6 +61,10 @@ class HomeViewModel(
                     it.copy(query = intent.query, isSearchLoading = true)
                 }
             }
+
+            is HomeIntent.Like -> {
+
+            }
         }
     }
 }
