@@ -37,7 +37,7 @@ class PlaceDetailsViewModel(
 
     private fun likePlace(id: String) {
         viewModelScope.launch {
-            if (state.last().placeDetails.isLiked.not())
+            if (_state.value.placeDetails.isLiked)
                 return@launch
             val result = likePlaceUseCase(id)
             _state.update {

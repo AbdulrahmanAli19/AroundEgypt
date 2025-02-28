@@ -113,10 +113,13 @@ class HomeViewModel(
 
     private fun likePlace(likeIntent: HomeIntent.Like) {
         viewModelScope.launch {
+
             val result = likePlaceUseCase(likeIntent.placeId)
             when (likeIntent.likeType) {
                 LikeTypes.RECOMMENDED -> {
                     val newList = state.value.recommendedItems.toMutableList()
+                    if (newList[likeIntent.position].isLiked)
+                        return@launch
                     newList[likeIntent.position] = newList[likeIntent.position].copy(isLiked = true)
                     newList[likeIntent.position] = newList[likeIntent.position].copy(
                         numberOfLikes = result.lastOrNull()?.likesNo?.toString()
@@ -129,6 +132,8 @@ class HomeViewModel(
 
                 LikeTypes.RECENT -> {
                     val newList = state.value.recentItems.toMutableList()
+                    if (newList[likeIntent.position].isLiked)
+                        return@launch
                     newList[likeIntent.position] = newList[likeIntent.position].copy(isLiked = true)
                     newList[likeIntent.position] = newList[likeIntent.position].copy(
                         numberOfLikes = result.lastOrNull()?.likesNo?.toString()
@@ -141,6 +146,8 @@ class HomeViewModel(
 
                 LikeTypes.SEARCH -> {
                     val newList = state.value.searchResult.toMutableList()
+                    if (newList[likeIntent.position].isLiked)
+                        return@launch
                     newList[likeIntent.position] = newList[likeIntent.position].copy(isLiked = true)
                     newList[likeIntent.position] = newList[likeIntent.position].copy(
                         numberOfLikes = result.lastOrNull()?.likesNo?.toString()
